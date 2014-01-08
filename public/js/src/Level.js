@@ -111,9 +111,13 @@ define(["lodash"],function(_) {
 					}
 					case "door": {
 						Crafty.e('Door').at(tile.x,tile.y);
+						Crafty.e('Floor').at(tile.x,tile.y);
+						break;
 					}
 					case "health": {
 						Crafty.e('HealthPack').at(tile.x,tile.y);
+						Crafty.e('Floor').at(tile.x,tile.y);
+						break;
 					}
 					default: {
 						// draw a ? because it's an unknown tile type but a tile does exist here

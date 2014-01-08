@@ -52,9 +52,10 @@ define(["Game"],function(Game) {
 							this.y -= this._movement.y;
 						}
 					})
-					.onHit('HealthPack',function() {
+					.onHit('HealthPack',function(data) {
 						game.player.addFakeHealth(5);
 						game.player.removeRealHealth(5);
+						data[0].obj.destroy();
 					})
 					.color('rgb(0,0,255)');
 			}
@@ -93,10 +94,11 @@ define(["Game"],function(Game) {
 		});
 		Crafty.c('HealthPack',{
 			init: function() {
-				this.requires('Drawable,Color')
+				this.requires('Drawable, Color')
 					.attr({
 						z: FLOOR_LAYER+1
-					});
+					})
+					.color('rgb(0,200,0)');
 			}
 		});
 	}
