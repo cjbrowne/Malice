@@ -84,11 +84,11 @@ define(["Game"],function(Game) {
 		});
 		Crafty.c('Door',{
 			init: function() {
-				this.requires('Drawable, Tint')
+				this.requires('Drawable, Color')
 					.attr({
 						z:DOOR_LAYER
 					})
-					.tint('rgb(128,128,128)',0.7);
+					.color('rgba(128,128,128,0.7)');
 			}
 		});
 		Crafty.c('HealthPack',{
