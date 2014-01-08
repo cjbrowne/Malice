@@ -27,9 +27,6 @@ define(["Game"],function(Game) {
                         x: x * Game.TILESIZE,
                         y: y * Game.TILESIZE
                     });
-                    console.log("Requested location:",x,",",y);
-                    console.log("Tile size:",Game.TILESIZE);
-                    console.log("Entity actual location:",this.x,",",this.y);
                     return this;
                 }
             }
@@ -54,6 +51,10 @@ define(["Game"],function(Game) {
 							this.x -= this._movement.x;
 							this.y -= this._movement.y;
 						}
+					})
+					.onHit('HealthPack',function() {
+						game.player.addFakeHealth(5);
+						game.player.removeRealHealth(5);
 					})
 					.color('rgb(0,0,255)');
 			}
@@ -83,18 +84,20 @@ define(["Game"],function(Game) {
 		});
 		Crafty.c('Door',{
 			init: function() {
-				this.requires('Drawable,Color')
+				this.requires('Drawable, Tint')
 					.attr({
 						z:DOOR_LAYER
 					})
-					.color('rgb(128,128,128)');
+					.tint('rgb(128,128,128)',0.7);
 			}
 		});
-		// HUD entities
-		Crafty.c('HealthDisplay',function() {
-			this.requires('2D, DOM, Text')
-				.text('Health: ')
-				.attr({x: 15, y: 15, w: 480, z: HUD_LAYER});
+		Crafty.c('HealthPack',{
+			init: function() {
+				this.requires('Drawable,Color')
+					.attr({
+						z: FLOOR_LAYER+1
+					});
+			}
 		});
 	}
 });

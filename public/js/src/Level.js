@@ -58,6 +58,14 @@ define(["lodash"],function(_) {
 							});
 							break;
 						}
+						case '+': {
+							this.map.tiles.push({
+								type: "health",
+								x: x,
+								y: y
+							});
+							break;
+						}
 						// silently ignore 'plain' whitespace, it represents a 'void' tile
 						case ' ': {
 							break;
@@ -103,6 +111,9 @@ define(["lodash"],function(_) {
 					}
 					case "door": {
 						Crafty.e('Door').at(tile.x,tile.y);
+					}
+					case "health": {
+						Crafty.e('HealthPack').at(tile.x,tile.y);
 					}
 					default: {
 						// draw a ? because it's an unknown tile type but a tile does exist here

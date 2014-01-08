@@ -8,7 +8,7 @@ define(["jquery","Level","HUD"],function($,Level,HUD) {
 				level.draw();
 				Crafty.viewport.follow(level.player,0,0);
 				Crafty.background('rgb(5,5,15)');
-				hud.draw();
+				hud.draw(game.player);
 			});
 		});
 		Crafty.scene('Loading',function() {
