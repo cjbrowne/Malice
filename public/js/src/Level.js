@@ -101,6 +101,9 @@ define(["lodash"],function(_) {
 						this.player = Crafty.e('Player').at(tile.x,tile.y);
 						break;
 					}
+					case "door": {
+						Crafty.e('Door').at(tile.x,tile.y);
+					}
 					default: {
 						// draw a ? because it's an unknown tile type but a tile does exist here
 						Crafty.e('Unknown').at(tile.x,tile.y);
