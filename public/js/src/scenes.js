@@ -1,14 +1,12 @@
-define(["jquery","Level","HUD"],function($,Level,HUD) {
+define(["jquery"],function($) {
 	return function(game) {
 		Crafty.scene('Game',function() {
-			var level = new Level();
-			var hud = new HUD();
 			$.get("/assets/map/0.lvl",function(level0) {
-				level.load(level0);
-				level.draw();
-				Crafty.viewport.follow(level.player,0,0);
+				game.level.load(level0);
+				game.level.draw();
+				Crafty.viewport.follow(game.level.player,0,0);
 				Crafty.background('rgb(5,5,15)');
-				hud.draw(game.player);
+				game.hud.draw(game.player);
 			});
 		});
 		Crafty.scene('Loading',function() {

@@ -1,6 +1,7 @@
 define(function() {
 	var Player = function() {};
 	Player.prototype = {
+		entity: null,
 		displayedHealth: 100,
 		actualHealth: 100,
 		addFakeHealth: function(amount) {

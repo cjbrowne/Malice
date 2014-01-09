@@ -1,4 +1,4 @@
-define(["lodash"],function(_) {
+define(["lodash","pathfinding"],function(_,PF) {
 	var Level = function() {};
 	Level.prototype = {
 		player: null,
@@ -70,12 +70,25 @@ define(["lodash"],function(_) {
 						case ' ': {
 							break;
 						}
+						case 'e': {
+							this.map.tiles.push({
+								type: "enemy",
+								x: x,
+								y: y
+							});
+							break;
+						}
 						case '\t': {
 							console.log("Warning: tab character detected.  Please strip the file of tab characters as they can seriously corrupt the shape of the map.");
 							break;
 						}
 						default: {
 							console.log("Unrecognised character at ",x,",",y,": \"", data[y][x], "\"");
+							this.map.tiles.push({
+								type:"unknown",
+								x: x,
+								y: y
+							});
 							break;
 						}
 					}
@@ -85,6 +98,16 @@ define(["lodash"],function(_) {
 				}
 			}
 			console.log("Level loaded.  Width:", this.map.width, "Height:", this.map.height);
+			console.log("Calculating navigation grid (for AI movement)");
+			this.navGrid = new PF.Grid(this.map.width,this.map.height);
+			var solidTiles = this.map.tiles.filter(function(tile) {
+				return (tile.type == "wall");
+			});
+			for(var i = 0; i < solidTiles.length; i++) {
+				var t = solidTiles[i];
+				this.navGrid.setWalkableAt(t.x,t.y,false);
+			}
+			console.log("Navigation grid ready");
 		},
 		draw: function() {
 			console.log("Drawing map with", this.map.tiles.length, "tiles");
@@ -118,6 +141,10 @@ define(["lodash"],function(_) {
 						Crafty.e('HealthPack').at(tile.x,tile.y);
 						Crafty.e('Floor').at(tile.x,tile.y);
 						break;
+					}
+					case "enemy": {
+						Crafty.e('Enemy').at(tile.x,tile.y);
+						Crafty.e('Floor').at(tile.x,tile.y);
 					}
 					default: {
 						// draw a ? because it's an unknown tile type but a tile does exist here
