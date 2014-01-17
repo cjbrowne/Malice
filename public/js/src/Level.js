@@ -1,4 +1,6 @@
-define(["lodash","pathfinding","Game"],function(_,PF,Game) {
+define(["lodash","pathfinding"],function(_,PF) {
+	var Game = {};
+	Game.TILESIZE = 128; // dirty hack because of circular dependency, need to abstract to static "config" class
 	var Level = function() {};
 	Level.prototype = {
 		player: null,
@@ -147,6 +149,7 @@ define(["lodash","pathfinding","Game"],function(_,PF,Game) {
 					case "enemy": {
 						Crafty.e('Enemy').at(tile.x,tile.y);
 						Crafty.e('Floor').at(tile.x,tile.y);
+						break;
 					}
 					default: {
 						// draw a ? because it's an unknown tile type but a tile does exist here

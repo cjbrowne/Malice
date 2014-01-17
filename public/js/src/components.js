@@ -98,6 +98,9 @@ define(["Game","pathfinding"],function(Game,PF) {
 		Crafty.c('Unknown',{
 			init:function() {
 				this.requires('Drawable, Color')
+					.attr({
+						z:HUD_LAYER-1
+					})
 					.color('rgb(255,0,255)');
 			}
 		});
@@ -148,7 +151,9 @@ define(["Game","pathfinding"],function(Game,PF) {
 			init: function() {
 				this.requires('Drawable, Color, Collision')
 					.attr({
-						z: PLAYER_LAYER
+						z: PLAYER_LAYER,
+						w: Game.TILESIZE / 2,
+						h: Game.TILESIZE * 0.75
 					})
 					.color('rgb(256,0,0)')
 					.onHit('Player',function() {
@@ -175,17 +180,33 @@ define(["Game","pathfinding"],function(Game,PF) {
 				setInterval(function() { enemy.tick() },500);
 			},
 			recalculatePath: function() {
-				var grid = game.level.navGrid.clone();
+				this.grid = game.level.navGrid.clone();
 				var finder = new PF.AStarFinder();
-				this.path = finder.findPath(Math.floor(this.x/Game.TILESIZE),Math.floor(this.y/Game.TILESIZE),Math.floor(this.moveTarget.x/Game.TILESIZE),Math.floor(this.moveTarget.y/Game.TILESIZE),grid);
+				this.path = finder.findPath(
+					Math.floor(this.x/Game.TILESIZE),
+					Math.floor(this.y/Game.TILESIZE),
+					Math.floor(this.moveTarget.x/Game.TILESIZE),
+					Math.floor(this.moveTarget.y/Game.TILESIZE),
+				this.grid);
 				this.path.reverse();
+				// smooth the path a tad
+				function smoothPath(path) {
+					var len = path.length-1;
+					for(var i = 0; i < len; i++) {
+						var newNode = [];
+						newNode[0] = (path[i][0] + path[i+1][0])/2;
+						newNode[1] = (path[i][1] + path[i+1][1])/2;
+						path.splice(i+1,0,newNode);
+					}
+				}
+				smoothPath(this.path);
 			},
 			tick: function() {
 				if(this.state == "moving") {
 					var nextPos = this.path.pop();
 					if(nextPos) {
-						this.x = nextPos[0]*64;
-						this.y = nextPos[1]*64;
+						this.x = nextPos[0]*Game.TILESIZE;
+						this.y = nextPos[1]*Game.TILESIZE;
 					}
 				}
 			}
