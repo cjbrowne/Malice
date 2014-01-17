@@ -120,7 +120,8 @@ define(["lodash","pathfinding","Game"],function(_,PF,Game) {
 					}
 					case "wall": {
 						// draw walls one tile "higher" than their base position (kinda a dirty hack)
-						Crafty.e('Wall').at(tile.x,tile.y);
+						Crafty.e('WallTop').at(tile.x,tile.y);
+						Crafty.e('WallBottom').at(tile.x,tile.y+1);
 						break;
 					}
 					case "playerSpawn": {

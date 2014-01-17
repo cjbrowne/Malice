@@ -16,7 +16,8 @@ define(["jquery"],function($) {
 				.css({ 'font-size': '24px', 'font-family': 'Arial', 'color': 'white', 'text-align': 'center' });
 			Crafty.load(['/assets/map/tileset.png','/assets/sprites/player.png'], function() {
 				Crafty.sprite(128,"/assets/map/tileset.png",{
-					"WallSprite": [0,0,1,2],
+					"WallTopSprite": [0,0],
+					"WallBottomSprite": [0,1],
 					"FloorSprite": [1,1]
 				});
 				Crafty.sprite(128,256,"/assets/sprites/player.png",{

@@ -8,7 +8,9 @@ define(["Game","pathfinding"],function(Game,PF) {
 	// doors should be rendered above the player layer but below the hud layer
 	var DOOR_LAYER = 200;
 	// walls should be above the player, above the floor but below the HUD
-	var WALL_LAYER = 200; 
+	var WALL_TOP_LAYER = 200; 
+	// but the bottom half of the wall should be below the player, above the floor and below the HUD
+	var WALL_BOTTOM_LAYER = 64;
 	return function(game) {
 		Crafty.c('GridSquare',{
 			init: function() {
@@ -43,9 +45,20 @@ define(["Game","pathfinding"],function(Game,PF) {
 			init:function() {
 				this.requires('Drawable, Collision, Multiway, SpriteAnimation, Color, Keyboard')
 					.attr({
-						z:PLAYER_LAYER
+						z:PLAYER_LAYER,
+						w: Game.TILESIZE / 2,
+						h: Game.TILESIZE * 0.75
 					})
 					.multiway({W: -90, S: 90, D: 0, A: 180})
+					.color('rgb(0,0,255)')
+					.collision(
+						new Crafty.polygon(
+							[0,16],
+							[this.w,this.h/4],
+							[this.w,this.h*0.75],
+							[0,this.h*0.75]
+						)
+					)
 					.onHit('Solid',function() {
 						this._speed = 0;
 						if(this._movement) {
@@ -58,7 +71,13 @@ define(["Game","pathfinding"],function(Game,PF) {
 						game.player.removeRealHealth(5);
 						data[0].obj.destroy();
 					})
-					.color('rgb(0,0,255)');
+					;
+				this._mbr = {
+					_w: this.w,
+					_h: this.h*0.25,
+					_x: 0,
+					_y: this.h*0.75
+				}
 				this.bind('EnterFrame',function() {
 					game.player.x = this.x;
 					game.player.y = this.y;
@@ -82,11 +101,25 @@ define(["Game","pathfinding"],function(Game,PF) {
 					.color('rgb(255,0,255)');
 			}
 		});
-		Crafty.c('Wall',{
+		Crafty.c('WallTop',{
 			init:function() {
-				this.requires('Drawable, Solid, WallSprite')
+				this.requires('Drawable, Solid, WallTopSprite')
 					.attr({
-						z:WALL_LAYER
+						z:WALL_TOP_LAYER
+					});
+				this._mbr = {
+					_w: this.w,
+					_h: this.h*0.50,
+					_x: 0,
+					_y: this.h*0.50
+				}
+			}
+		});
+		Crafty.c('WallBottom',{
+			init:function() {
+				this.requires('Drawable, Solid, WallBottomSprite')
+					.attr({
+						z:WALL_BOTTOM_LAYER
 					});
 			}
 		});
