@@ -15,10 +15,11 @@ define(["jquery"],function($) {
 				.attr({ x: 0, y: game.height/2 - 24, w: game.width })
 				.css({ 'font-size': '24px', 'font-family': 'Arial', 'color': 'white', 'text-align': 'center' });
 			Crafty.load(['/assets/map/tileset.png','/assets/sprites/player.png'], function() {
-				Crafty.sprite(64,"/assets/map/tileset.png",{
-
+				Crafty.sprite(128,"/assets/map/tileset.png",{
+					"WallSprite": [0,0,1,2],
+					"FloorSprite": [1,1]
 				});
-				Crafty.sprite(64,128,"/assets/sprites/player.png",{
+				Crafty.sprite(128,256,"/assets/sprites/player.png",{
 					"PlayerSprite":[0,0]
 				});
 				Crafty.scene('Game');

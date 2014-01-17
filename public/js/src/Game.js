@@ -16,6 +16,6 @@ define(["jquery","Player","Level","HUD"],function($,Player,Level,HUD) {
 			Crafty.scene('Loading');
 		}
 	}
-	Game.TILESIZE = 64;
+	Game.TILESIZE = 128;
 	return Game;
 });

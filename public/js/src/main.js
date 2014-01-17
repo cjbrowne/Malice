@@ -12,4 +12,5 @@ require(["Game","scenes","components","jquery"],function(Game,scenes,components,
 	game.start();
 	// workaround for performance bug in Crafty
 	Crafty.viewport.clampToEntities = false;
+	console.log(Crafty.frame());
 });

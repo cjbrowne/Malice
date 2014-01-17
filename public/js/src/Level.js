@@ -1,4 +1,4 @@
-define(["lodash","pathfinding"],function(_,PF) {
+define(["lodash","pathfinding","Game"],function(_,PF,Game) {
 	var Level = function() {};
 	Level.prototype = {
 		player: null,
@@ -119,6 +119,7 @@ define(["lodash","pathfinding"],function(_,PF) {
 						break;
 					}
 					case "wall": {
+						// draw walls one tile "higher" than their base position (kinda a dirty hack)
 						Crafty.e('Wall').at(tile.x,tile.y);
 						break;
 					}

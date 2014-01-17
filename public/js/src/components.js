@@ -7,6 +7,8 @@ define(["Game","pathfinding"],function(Game,PF) {
 	var FLOOR_LAYER = 5;
 	// doors should be rendered above the player layer but below the hud layer
 	var DOOR_LAYER = 200;
+	// walls should be above the player, above the floor but below the HUD
+	var WALL_LAYER = 200; 
 	return function(game) {
 		Crafty.c('GridSquare',{
 			init: function() {
@@ -68,13 +70,10 @@ define(["Game","pathfinding"],function(Game,PF) {
 		});
 		Crafty.c('Floor',{
 			init:function() {
-				this.requires('Drawable, Color')
+				this.requires('Drawable, FloorSprite')
 					.attr({
-						z:FLOOR_LAYER,
-						x:16,
-						y:16
-					})
-					.color('rgb(128,128,128)');
+						z:FLOOR_LAYER
+					});
 			}
 		});
 		Crafty.c('Unknown',{
@@ -85,8 +84,10 @@ define(["Game","pathfinding"],function(Game,PF) {
 		});
 		Crafty.c('Wall',{
 			init:function() {
-				this.requires('Drawable,Color,Solid')
-					.color('rgb(64,64,64)');
+				this.requires('Drawable, Solid, WallSprite')
+					.attr({
+						z:WALL_LAYER
+					});
 			}
 		});
 		Crafty.c('Door',{
@@ -143,9 +144,8 @@ define(["Game","pathfinding"],function(Game,PF) {
 			recalculatePath: function() {
 				var grid = game.level.navGrid.clone();
 				var finder = new PF.AStarFinder();
-				this.path = finder.findPath(Math.floor(this.x/64),Math.floor(this.y/64),Math.floor(this.moveTarget.x/64),Math.floor(this.moveTarget.y/64),grid);
+				this.path = finder.findPath(Math.floor(this.x/Game.TILESIZE),Math.floor(this.y/Game.TILESIZE),Math.floor(this.moveTarget.x/Game.TILESIZE),Math.floor(this.moveTarget.y/Game.TILESIZE),grid);
 				this.path.reverse();
-				this.tick();
 			},
 			tick: function() {
 				if(this.state == "moving") {
