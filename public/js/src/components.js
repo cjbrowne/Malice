@@ -159,29 +159,18 @@ define(["Game","pathfinding"],function(Game,PF) {
 					.onHit('Player',function() {
 						game.player.addRealHealth(5);
 						game.player.removeFakeHealth(5);
-						this._speed = 0;
-						if(this._movement) {
-							this.x -= this._movement.x;
-							this.y -= this._movement.y;
-						}
 					});
-				this.bind('PlayerMoved',function(playerPosition) {
-					var currentPosition = new Crafty.math.Vector2D(this.x,this.y);
-					if(currentPosition.distanceSq(playerPosition) < Math.pow(5 * Game.TILESIZE,2)) {
-						this.moveTarget.setValues(playerPosition);
-						this.recalculatePath();
-						this.state = "moving";
-					} else {
-						// stop moving if the player leaves the radius
-						this.state = "idle";
-					}
-				});
 				var enemy = this;
-				setInterval(function() { enemy.tick() },500);
+				requestAnimationFrame(function() { enemy.tick() });
+				this.lastPathCalc = new Date();
 			},
 			recalculatePath: function() {
 				this.grid = game.level.navGrid.clone();
-				var finder = new PF.AStarFinder();
+				var finder = new PF.AStarFinder({
+					allowDiagonal: true,
+					dontCrossCorners: true,
+					heuristic: PF.Heuristic.euclidean
+				});
 				this.path = finder.findPath(
 					Math.floor(this.x/Game.TILESIZE),
 					Math.floor(this.y/Game.TILESIZE),
@@ -189,26 +178,51 @@ define(["Game","pathfinding"],function(Game,PF) {
 					Math.floor(this.moveTarget.y/Game.TILESIZE),
 				this.grid);
 				this.path.reverse();
-				// smooth the path a tad
-				function smoothPath(path) {
-					var len = path.length-1;
-					for(var i = 0; i < len; i++) {
-						var newNode = [];
-						newNode[0] = (path[i][0] + path[i+1][0])/2;
-						newNode[1] = (path[i][1] + path[i+1][1])/2;
-						path.splice(i+1,0,newNode);
-					}
+				/* lerp the path to make it smootherer */
+				var len = this.path.length;
+				for(var i = 0; i < len-1; i++) {
+					var newNode = [
+						Crafty.math.lerp(this.path[i][0],this.path[i+1][0],0.5),
+						Crafty.math.lerp(this.path[i][1],this.path[i+1][1],0.5)
+					];
+					this.path.splice(i,0,newNode);
 				}
-				smoothPath(this.path);
+				this.nextPos = this.path.pop();
+				this.state = "moving";
 			},
 			tick: function() {
-				if(this.state == "moving") {
-					var nextPos = this.path.pop();
-					if(nextPos) {
-						this.x = nextPos[0]*Game.TILESIZE;
-						this.y = nextPos[1]*Game.TILESIZE;
+				var time = new Date();
+				if(time.getTime() - this.lastPathCalc.getTime() > 500) {
+					var currentPosition = new Crafty.math.Vector2D(this.x,this.y);
+					var playerPosition = new Crafty.math.Vector2D(game.player.x,game.player.y);
+					if(currentPosition.distanceSq(playerPosition) < Math.pow(5 * Game.TILESIZE,2)) {
+						this.moveTarget.setValues(playerPosition);
+						this.state = "pathing";
+						this.recalculatePath();
+						this.lastPathCalc = new Date();
+					} else {
+						// stop moving if the player leaves the radius
+						this.state = "idle";
 					}
 				}
+				if(this.state == "moving") {
+					var speed = 1;
+					if(this.nextPos[0] * Game.TILESIZE == this.x && this.nextPos[1] * Game.TILESIZE == this.y) {
+						this.nextPos = (this.path.pop() || [game.player.x/Game.TILESIZE,game.player.y/Game.TILESIZE]);
+					}
+					if(this.nextPos[0] * Game.TILESIZE < this.x) {
+						this.x -= speed;
+					} else if(this.nextPos[0] * Game.TILESIZE > this.x) {
+						this.x += speed;
+					}
+					if(this.nextPos[1] * Game.TILESIZE < this.y) {
+						this.y -= speed;
+					} else if(this.nextPos[1] * Game.TILESIZE > this.y) {
+						this.y += speed;
+					}
+				}
+				var enemy = this;
+				requestAnimationFrame(function() { enemy.tick(); });
 			}
 		});
 	}
