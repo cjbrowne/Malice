@@ -2,7 +2,7 @@ body {
   padding: 50px;
   background-color: #334;
 }
-#cr-stage {
+#gameView {
   padding: 0;
   margin: auto;
   position: absolute;
