@@ -4,7 +4,7 @@
   <image source="tileset.png" width="256" height="256"/>
  </tileset>
  <tileset firstgid="5" name="phystiles" tilewidth="32" tileheight="32">
-  <image source="../../../artwork/phystiles.png" width="32" height="32"/>
+  <image source="phystiles.png" width="32" height="32"/>
   <tile id="0">
    <properties>
     <property name="type" value="solid"/>
