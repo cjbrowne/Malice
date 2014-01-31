@@ -1,19 +1,16 @@
 define(function() {
 	return [
+	/* -- TODO: create these assets
 		{
-			name: "tileset",
+			name: "terrain",
 			type: "image",
-			src:  "assets/map/tileset.png"
+			src:  "assets/terrain.png"
 		},
 		{
-			name: "level0",
-			type: "tmx",
-			src:  "assets/map/Level0.tmx"
-		},
-		{
-			name: "player",
+			name: "buildings",
 			type: "image",
-			src: "assets/sprites/player.png"
+			src: "assets/buildings.png"
 		}
+	*/
 	];
 });

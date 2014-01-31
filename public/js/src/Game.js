@@ -1,4 +1,4 @@
-define(["PlayScreen","resources","PlayerEntity"],function(PlayScreen,resources,PlayerEntity) {
+define(["PlayScreen","resources"],function(PlayScreen,resources) {
 	var Game = function() {
 
 	}
@@ -15,14 +15,8 @@ define(["PlayScreen","resources","PlayerEntity"],function(PlayScreen,resources,P
 		},
 		postLoad: function() {
 			me.state.set(me.state.PLAY,new PlayScreen());
-			me.entityPool.add('player',PlayerEntity);
-			me.input.bindKey(me.input.KEY.W, "up");
-			me.input.bindKey(me.input.KEY.A, "left");
-			me.input.bindKey(me.input.KEY.D, "right");
-			me.input.bindKey(me.input.KEY.S, "down");
-			// set up system crap
+			// set up system crap (e.g. we don't want gravity)
 			me.sys.gravity = 0;
-
 
 			me.state.change(me.state.PLAY);
 		}
