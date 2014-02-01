@@ -10,6 +10,7 @@ function generateTerrainMap(mapDimension, unitSize, roughness) {
 
     var map = create2DArray(mapDimension+1, mapDimension+1);
     startDisplacement(map, mapDimension);
+    threshold(map);
     return map;
 
     // Setup the map array for use
@@ -30,19 +31,19 @@ function generateTerrainMap(mapDimension, unitSize, roughness) {
         var tr, tl, t, br, bl, b, r, l, center;
 
         // top left
-        map[0][0] = Math.random(1.0);
+        map[0][0] = Math.random();
         tl = map[0][0];
 
         // bottom left
-        map[0][mapDimension] = Math.random(1.0);
+        map[0][mapDimension] = Math.random();
         bl = map[0][mapDimension];
 
         // top right
-        map[mapDimension][0] = Math.random(1.0);
+        map[mapDimension][0] = Math.random();
         tr = map[mapDimension][0];
 
         // bottom right
-        map[mapDimension][mapDimension] = Math.random(1.0);
+        map[mapDimension][mapDimension] = Math.random();
         br = map[mapDimension][mapDimension];
 
         // Center
@@ -136,7 +137,7 @@ function generateTerrainMap(mapDimension, unitSize, roughness) {
     // Random function to offset the center
     function displace(num){
         var max = num / (mapDimension + mapDimension) * roughness;
-        return (Math.random(1.0)- 0.5) * max;
+        return (Math.random()- 0.5) * max;
     }
 
     // Normalize the value to make sure its within bounds
@@ -147,6 +148,22 @@ function generateTerrainMap(mapDimension, unitSize, roughness) {
             value = 0;
         }
         return value;
+    }
+
+    function threshold(map) {
+        for(var x = 0; x < map.length; x++) {
+            for(var y = 0; y < map[x].length; y++) {
+                if(map[x][y] > 0.9) {
+                    map[x][y] = 3;
+                } else if(map[x][y] > 0.75) {
+                    map[x][y] = 2;
+                } else if(map[x][y] > 0.5) {
+                    map[x][y] = 1;
+                } else {
+                    map[x][y] = 0;
+                }
+            }
+        }
     }
 }
 

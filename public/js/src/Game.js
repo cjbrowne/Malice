@@ -1,4 +1,4 @@
-define(["PlayScreen","resources"],function(PlayScreen,resources) {
+define(["PlayScreen","resources","Menu"],function(PlayScreen,resources,Menu) {
 	var Game = function() {
 
 	}
@@ -15,10 +15,11 @@ define(["PlayScreen","resources"],function(PlayScreen,resources) {
 		},
 		postLoad: function() {
 			me.state.set(me.state.PLAY,new PlayScreen());
+			me.state.set(me.state.MENU,new Menu());
 			// set up system crap (e.g. we don't want gravity)
 			me.sys.gravity = 0;
 
-			me.state.change(me.state.PLAY);
+			me.state.change(me.state.MENU);
 		}
 	}
 	return Game;
