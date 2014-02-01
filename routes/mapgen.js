@@ -1,6 +1,6 @@
 /*
-	API for generating a map
-	Version: 0.1
+    API for generating a map
+    Version: 0.1
 */
 
 var seedrandom = require('seedrandom');
@@ -15,16 +15,12 @@ function createRandomSeed() {
 
 module.exports = {
     retrieve: function(req, res) {
-    	if(!req.params.seed) {
-    		res.redirect('/map/' + createRandomSeed());
-    		return;
-    	}
-        var seed = req.params.seed;
+        var seed = req.params.seed || createRandomSeed();
         var mapGen = new TerrainGenerator({
             seed: seed
         });
         var map = mapGen.generate(64, 1, 8);
-        res.send({
+        res.json({
             seed: seed,
             version: 1,
             orientation: "isometric",
@@ -32,7 +28,21 @@ module.exports = {
             width: 64,
             tileheight: 64,
             tilewidth: 64,
-            map: map
+            layers: [
+                map
+            ],
+            tilesets: [{
+                firstgid: 1,
+                image: "/assets/map/terrain.png",
+                imageheight: 32*4,
+                imagewidth: 64*4,
+                margin: 0,
+                name: "terrain",
+                properties: [],
+                spacing: 0,
+                tileheight: 32,
+                tilewidth: 64,
+            }]
         });
     }
 }

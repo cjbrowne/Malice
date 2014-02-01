@@ -33,8 +33,8 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/map',mapgen.retrieve);
-app.get('/map/:seed', mapgen.retrieve);
+app.get('/map/:fuckMelonJS',mapgen.retrieve);
+app.get('/map/:seed/:fuckMelonJS', mapgen.retrieve);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

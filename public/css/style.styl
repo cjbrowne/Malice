@@ -9,11 +9,55 @@ body
 	left 0
 	right 0
 	bottom 0
-#healthDisplay
+#menu
+	padding 0
 	position absolute
-	left 1em
-	top 1em
-	font 14pt "Lucida Grande", Helvetica, Arial, sans-serif
-#healthBar
-	height 1.5em
-	background-color red
+	margin auto
+	z-index 1
+	top 0
+	left 0
+	right 0
+	bottom 0
+	width 16em
+	height 20em
+	display none
+	button
+		background-color #333
+		color #CCC
+		width 7em
+		height 3em
+		margin auto
+		font-size 24pt
+		border-width 0.5em
+		border-radius 0.5em
+	#new
+		background-color #003
+		border-color #00F
+	#load
+		background-color #030
+		border-color #0F0
+#error
+	position absolute
+	margin auto
+	top 0
+	left 0
+	width 100vw
+	height 100vh
+	z-index 2
+	display none
+	background-color #300
+	span.error
+		position absolute
+		margin auto
+		top 0
+		left 0
+		right 0
+		bottom 0
+		width 25em
+		height 8em
+		h1
+			text-align center
+			font-size 24pt
+
+#bugReportMessage
+	display none
