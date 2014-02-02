@@ -19,21 +19,20 @@ define(["PlayScreen","MaliceError"],function(PlayScreen,MaliceError) {
 				$("#menu").append("<input type='text' id='seed' placeholder='seed (leave blank to generate random seed)'/>");
 				$("#menu").append("<button id='create'>Create</button>");
 				$("#create").on('click',function(evt) {
+					$("#menu").empty();
 					var seed = $(evt.target).val();
 					me.loader.load({
 						name: "map",
 						type: "tmx",
-						src: "/map" + (seed && "/" + seed) + "/"+randomExpletive()+"MelonJS.json"
+						src: "/assets/map/terrain.json"
+						//src: "/map" + (seed && "/" + seed) + "/"+randomExpletive()+"MelonJS.json"
 					},function() {
-						$("#menu").empty();
 						me.state.set(me.state.PLAY,new PlayScreen());
 						me.state.change(me.state.PLAY);
 					},function() {
 						var error = new MaliceError("Could not load map from server.",MaliceError.BUG);
 						error.show();
 					});
-					
-					me.state.change(me.state.LOADING);
 				});
 			});
 		},

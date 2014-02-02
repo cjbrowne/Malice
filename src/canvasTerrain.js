@@ -11,7 +11,7 @@ function generateTerrainMap(mapDimension, unitSize, roughness) {
     var map = create2DArray(mapDimension+1, mapDimension+1);
     startDisplacement(map, mapDimension);
     threshold(map);
-    return map;
+    return fold(map);
 
     // Setup the map array for use
     function create2DArray(d1, d2) {
@@ -154,16 +154,26 @@ function generateTerrainMap(mapDimension, unitSize, roughness) {
         for(var x = 0; x < map.length; x++) {
             for(var y = 0; y < map[x].length; y++) {
                 if(map[x][y] > 0.9) {
-                    map[x][y] = 3;
-                } else if(map[x][y] > 0.75) {
                     map[x][y] = 2;
+                } else if(map[x][y] > 0.75) {
+                    map[x][y] = 3;
                 } else if(map[x][y] > 0.5) {
                     map[x][y] = 1;
                 } else {
-                    map[x][y] = 0;
+                    map[x][y] = 4;
                 }
             }
         }
+    }
+
+    function fold(map) {
+        var folded = [];
+        map.forEach(function(col) {
+            col.forEach(function(item) {
+                folded.push(item);
+            });
+        });
+        return folded;
     }
 }
 

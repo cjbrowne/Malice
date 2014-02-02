@@ -20,29 +20,45 @@ module.exports = {
             seed: seed
         });
         var map = mapGen.generate(64, 1, 8);
-        res.json({
-            seed: seed,
-            version: 1,
+        res.send({
+            height: 65,
+            layers: [{
+                data: map,
+                height: 65,
+                name: "Terrain",
+                opacity: 1,
+                type: "tilelayer",
+                visible: true,
+                width: 65,
+                x: 0,
+                y: 0
+            }],
             orientation: "isometric",
-            height: 64,
-            width: 64,
-            tileheight: 64,
-            tilewidth: 64,
-            layers: [
-                map
-            ],
+            properties: {
+                background_color: "000000"
+            },
+            tileheight: 32,
             tilesets: [{
                 firstgid: 1,
-                image: "/assets/map/terrain.png",
-                imageheight: 32*4,
-                imagewidth: 64*4,
+                image: "terrain.png",
+                imageheight: 64,
+                imagewidth: 128,
                 margin: 0,
                 name: "terrain",
-                properties: [],
+                properties: {
+
+                },
                 spacing: 0,
                 tileheight: 32,
-                tilewidth: 64,
-            }]
+                tileoffset: {
+                    x: 0,
+                    y: 32
+                },
+                tilewidth: 64
+            }],
+            tilewidth: 64,
+            version: 1,
+            width: 65
         });
     }
 }

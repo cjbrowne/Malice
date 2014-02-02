@@ -1,11 +1,12 @@
 define(function() {
     return [
-        /* -- TODO: create these assets
 		{
 			name: "terrain",
 			type: "image",
-			src:  "assets/terrain.png"
+			src:  "assets/map/terrain.png"
 		},
+
+        /* -- TODO: create these assets
 		{
 			name: "buildings",
 			type: "image",
