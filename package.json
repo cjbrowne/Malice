@@ -10,6 +10,7 @@
     "jade": "*",
     "stylus": "*",
     "seedrandom": "*",
-    "redis": "*"
+    "redis": "*",
+    "nib":"*"
   }
 }

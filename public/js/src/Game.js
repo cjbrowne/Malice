@@ -1,10 +1,21 @@
 define(["resources","Menu"],function(resources,Menu) {
+	var RESOLUTIONS = [
+		[640,360],
+		[1024,576],
+		[1280,720],
+		[1920,1080]
+	];
 	var Game = function() {
 
 	}
 	Game.prototype = {
 		run: function() {
-			if(!me.video.init(null,800,600)) {
+			var available_resolutions = RESOLUTIONS.filter(function(res) {
+				return (res[0] <= $(window).width() && res[1] <= $(window).height());
+			});
+			var best_res = available_resolutions[available_resolutions.length-1];
+			console.log(available_resolutions,best_res);
+			if(!me.video.init(null,best_res[0],best_res[1])) {
 				alert("You need HTML5 to run this game.");
 				return;
 			}
