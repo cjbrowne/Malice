@@ -19,8 +19,9 @@ module.exports = {
         var mapGen = new TerrainGenerator({
             seed: seed
         });
-        var map = mapGen.generate(64, 1, 8);
+        var map = mapGen.generate(64, 1, 4);
         res.send({
+            backgroundcolor: "000000",
             height: 65,
             layers: [{
                 data: map,
@@ -34,15 +35,12 @@ module.exports = {
                 y: 0
             }],
             orientation: "isometric",
-            properties: {
-                background_color: "000000"
-            },
             tileheight: 32,
             tilesets: [{
                 firstgid: 1,
                 image: "terrain.png",
-                imageheight: 64,
-                imagewidth: 128,
+                imageheight: 32,
+                imagewidth: 256,
                 margin: 0,
                 name: "terrain",
                 properties: {
@@ -52,7 +50,7 @@ module.exports = {
                 tileheight: 32,
                 tileoffset: {
                     x: 0,
-                    y: 32
+                    y: 0
                 },
                 tilewidth: 64
             }],
