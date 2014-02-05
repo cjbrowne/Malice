@@ -25,7 +25,6 @@ define(["PlayScreen", "MaliceError"], function(PlayScreen, MaliceError) {
                     me.loader.load({
                         name: "map",
                         type: "tmx",
-                        //src: "/assets/map/terrain.json"
                         src: "/map" + (seed && "/" + seed) + "/" + randomExpletive() + "MelonJS.json"
                     }, function() {
                         me.state.set(me.state.PLAY, new PlayScreen());

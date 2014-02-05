@@ -19,6 +19,7 @@ module.exports = {
         var mapGen = new TerrainGenerator(seed);
         var map = mapGen.generate(64, 1, 4);
         res.send({
+            seed: seed,
             backgroundcolor: "000000",
             height: 65,
             layers: [{

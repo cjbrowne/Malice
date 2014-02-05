@@ -4,7 +4,7 @@ require.config({
         jquery: "/js/lib/jquery-2.0.3.min"
     }
 });
-require(["jquery","Game"], function($,Game) {
+require(["jquery","Game","MaliceDebug"], function($,Game,MaliceDebug) {
     var game = new Game();
     game.run();
     var debug = false;

@@ -1,4 +1,4 @@
-define(["HUD"], function(HUD) {
+define(["HUD","MaliceDebug"], function(HUD,MaliceDebug) {
     return me.ScreenObject.extend({
         init: function() {
             this.parent(true);
@@ -9,7 +9,7 @@ define(["HUD"], function(HUD) {
         onResetEvent: function() {
         	me.game.reset();
             me.levelDirector.loadLevel("map");
-            me.game.viewport.move(me.game.currentLevel.realwidth / 2, me.game.currentLevel.realheight / 2);
+            me.game.viewport.move(me.game.currentLevel.width / 2, me.game.currentLevel.height / 2);
             me.input.bindKey(me.input.KEY.W, "up", false);
             me.input.bindKey(me.input.KEY.A, "left", false);
             me.input.bindKey(me.input.KEY.S, "down", false);
@@ -39,6 +39,7 @@ define(["HUD"], function(HUD) {
             }
             me.game.update();
             me.game.draw();
+            malice.debug.update();
         },
 
         draw: function(context) {
