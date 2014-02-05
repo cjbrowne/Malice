@@ -10,12 +10,16 @@ define(["resources","Menu"],function(resources,Menu) {
 	}
 	Game.prototype = {
 		run: function() {
+			var clientHeight = $(window).height();
+			var clientWidth = $(window).width();
 			var available_resolutions = RESOLUTIONS.filter(function(res) {
-				return (res[0] <= $(window).width() && res[1] <= $(window).height());
+				return (res[0] <= clientWidth && res[1] <= clientHeight);
 			});
-			var best_res = available_resolutions[available_resolutions.length-1];
-			console.log(available_resolutions,best_res);
-			if(!me.video.init(null,best_res[0],best_res[1])) {
+			// TODO: generate warning instead of merely falling back on lowest available resolution.
+			var best_res = available_resolutions[available_resolutions.length-1] || RESOLUTIONS[0];
+			// TODO: create MaliceDebug object to handle all the debug information
+			$("#debug_res").text(best_res[0] + "x" + best_res[1]);
+			if(!me.video.init(null,best_res[0],best_res[1],true)) {
 				alert("You need HTML5 to run this game.");
 				return;
 			}

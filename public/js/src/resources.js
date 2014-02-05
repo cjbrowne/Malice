@@ -5,6 +5,11 @@ define(function() {
 			type: "image",
 			src:  "assets/map/terrain.png"
 		},
+        {
+            name: "objects",
+            type: "image",
+            src: "assets/map/objects.png"
+        },
 
         /* -- TODO: create these assets
 		{

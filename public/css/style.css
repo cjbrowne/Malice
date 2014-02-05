@@ -14,3 +14,6 @@ body{background-color:#334}
 #error span.error{position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;width:25em;height:8em;}
 #error span.error h1{text-align:center;font-size:24pt}
 #bugReportMessage{display:none}
+#debug{display:none;position:absolute;left:.5em;top:.5em;z-index:2;background-color:rgba(255,255,255,0.5);padding:5px;width:25vw;}
+#debug .label{float:left;clear:left}
+#debug .value{float:right;clear:right}

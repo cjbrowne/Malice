@@ -21,9 +21,11 @@ define(["PlayScreen", "MaliceError"], function(PlayScreen, MaliceError) {
                 $("#create").on('click', function(evt) {
                     $("#menu").empty();
                     var seed = $(evt.target).val();
+                    me.state.change(me.state.LOADING);
                     me.loader.load({
                         name: "map",
                         type: "tmx",
+                        //src: "/assets/map/terrain.json"
                         src: "/map" + (seed && "/" + seed) + "/" + randomExpletive() + "MelonJS.json"
                     }, function() {
                         me.state.set(me.state.PLAY, new PlayScreen());
