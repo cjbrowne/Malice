@@ -39,6 +39,7 @@ define(["HUD","MaliceDebug"], function(HUD,MaliceDebug) {
             }
             me.game.update();
             me.game.draw();
+            malice.debug.framecount++;
             malice.debug.update();
         },
 

@@ -6,7 +6,7 @@ define(["PlayScreen", "MaliceError"], function(PlayScreen, MaliceError) {
             "screw",
             "bugger"
         ];
-        return expletives[Math.round(Math.random() * expletives.length)];
+        return expletives[Math.floor(Math.random() * expletives.length)];
     }
     return me.ScreenObject.extend({
         init: function() {
