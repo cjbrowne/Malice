@@ -1,5 +1,4 @@
 // this is a bit of an odd module because it needs to create a globally-accessible "MaliceDebug" object
-// and it doesn't explicitly expose the MaliceDebug constructor
 var malice = malice || {};
 if (!malice.debug) {
     (function() {

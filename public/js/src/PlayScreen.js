@@ -1,4 +1,11 @@
 define(["HUD","MaliceDebug"], function(HUD,MaliceDebug) {
+    function iso_to_screen(iso) {
+        // TODO: implement this
+        return {
+            x: me.game.currentLevel.width / 2,
+            y: me.game.currentLevel.height / 2
+        }
+    }
     return me.ScreenObject.extend({
         init: function() {
             this.parent(true);
@@ -7,9 +14,15 @@ define(["HUD","MaliceDebug"], function(HUD,MaliceDebug) {
         },
 
         onResetEvent: function() {
-        	me.game.reset();
+        	var player_pos = me.loader.getTMX("map").player_pos;
+            var player_pos_abs = iso_to_screen(player_pos);
+            me.game.reset();
             me.levelDirector.loadLevel("map");
-            me.game.viewport.move(me.game.currentLevel.width / 2, me.game.currentLevel.height / 2);
+            me.game.viewport.move(
+                player_pos_abs.x -
+                me.game.viewport.width / 2, 
+                player_pos_abs.y -
+                me.game.viewport.height / 2);
             me.input.bindKey(me.input.KEY.W, "up", false);
             me.input.bindKey(me.input.KEY.A, "left", false);
             me.input.bindKey(me.input.KEY.S, "down", false);
@@ -18,12 +31,12 @@ define(["HUD","MaliceDebug"], function(HUD,MaliceDebug) {
 
         onUpdateFrame: function() {
             if (me.input.isKeyPressed('left')) {
-                me.game.viewport.move(-(me.game.currentLevel.tilewidth / 2), 0);
+                me.game.viewport.move(-(me.game.currentLevel.tileheight / 2), 0);
                 // force redraw
                 me.game.repaint();
 
             } else if (me.input.isKeyPressed('right')) {
-                me.game.viewport.move(me.game.currentLevel.tilewidth / 2, 0);
+                me.game.viewport.move(me.game.currentLevel.tileheight / 2, 0);
                 // force redraw
                 me.game.repaint();
             }

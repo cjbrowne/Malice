@@ -10,6 +10,11 @@ define(function() {
             type: "image",
             src: "assets/map/objects.png"
         },
+        {
+            name: "player_base",
+            type: "image",
+            src: "assets/buildings/player_base.png"
+        },
 
         /* -- TODO: create these assets
 		{

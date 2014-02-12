@@ -16,12 +16,18 @@ function MapGenerator(seed) {
     };
 
     this.OBJECT_TYPES = {
-        "forest": {
+        forest: {
             gid: 5,
             requires: [this.TERRAIN_TYPES.GRASS],
             chance: 0.25
         }
     };
+
+    this.BUILDING_TYPES = {
+        PLAYER_BASE: 6
+    }
+
+    this.player_pos = null;
 }
 MapGenerator.prototype = {
 
@@ -31,11 +37,14 @@ MapGenerator.prototype = {
         this.roughness = roughness;
         this.terrain = this.create2DArray(this.mapDimension + 1, this.mapDimension + 1);
         this.objects = this.create2DArray(this.mapDimension + 1, this.mapDimension + 1);
+        this.player = this.create2DArray(this.mapDimension + 1, this.mapDimension + 1);
         this.startDisplacement();
         this.threshold();
         return {
             terrain: this.fold(this.terrain),
-            objects: this.fold(this.objects)
+            objects: this.fold(this.objects),
+            player: this.fold(this.player),
+            player_pos: this.player_pos
         }
     },
 
@@ -176,7 +185,10 @@ MapGenerator.prototype = {
         return value;
     },
 
+    // actually the potatoes in our meat+potatoes 2-pass algorithm
+    // there are hysterical raisins for the misnomer
     threshold: function() {
+        var base_placed = false;
         for (var x = 0; x < this.terrain.length; x++) {
             for (var y = 0; y < this.terrain[x].length; y++) {
                 if (this.terrain[x][y] > 0.99) {
@@ -189,6 +201,22 @@ MapGenerator.prototype = {
                     this.terrain[x][y] = this.TERRAIN_TYPES.OCEAN;
                 }
                 this.objects[x][y] = this.placeObject(this.terrain[x][y]);
+                // for now, we're going to just use a very naïve algorithm for placing the base which only places
+                // bases on grass tiles that *don't* have a forest on the tile
+                // later on, we want to replace this with an algorithm which chooses the place on the map which is most
+                // remote, just to be annoying.  We might also demolish forests within, say, a 10 tile radius of the
+                // base just for added arsiness.
+                if (!base_placed && this.terrain[x][y] == this.TERRAIN_TYPES.GRASS && this.objects[x][y] == 0
+                    // 15% chance of spawning if the tile is in the first 3/4 of the map, guaranteed spawn if we're running
+                    // rapidly out of potential tiles and need to ensure the player actually starts somewhere!
+                    && (Math.random() < 0.15 || (x > this.mapDimension-(this.mapDimension/4) && y > this.mapDimension-(this.mapDimension/4)))
+                    ) {
+                        this.player[x][y] = this.BUILDING_TYPES.PLAYER_BASE;
+                        this.player_pos = {x: x, y: y};
+                        base_placed = true;
+                } else {
+                    this.player[x][y] = 0;
+                }
             }
         }
     },

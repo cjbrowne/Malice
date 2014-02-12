@@ -5,6 +5,7 @@
 
 var seedrandom = require('seedrandom');
 var TerrainGenerator = require('../src/MapGenerator.js');
+var MAP_SIZE = 64;
 
 // helper function to create a random URL-safe seed
 // note: this is hardcoded to create 32-byte seeds.  That *should* be more than enough precision, and it gives us a uniform-sized URL.
@@ -17,29 +18,40 @@ module.exports = {
     retrieve: function(req, res) {
         var seed = req.params.seed || createRandomSeed();
         var mapGen = new TerrainGenerator(seed);
-        var map = mapGen.generate(64, 1, 4);
+        var map = mapGen.generate(MAP_SIZE, 1, 4);
         res.send({
             seed: seed,
+            player_pos: map.player_pos,
             backgroundcolor: "000000",
-            height: 65,
+            height: MAP_SIZE+1,
             layers: [{
                 data: map.terrain,
-                height: 65,
+                height: MAP_SIZE+1,
                 name: "terrain",
                 opacity: 1,
                 type: "tilelayer",
                 visible: true,
-                width: 65,
+                width: MAP_SIZE+1,
                 x: 0,
                 y: 0
             }, {
                 data: map.objects,
-                height: 65,
+                height: MAP_SIZE+1,
                 name: "objects",
                 opacity: 1,
                 type: "tilelayer",
                 visible: true,
-                width: 65,
+                width: MAP_SIZE+1,
+                x: 0,
+                y: 0
+            }, {
+                data: map.player,
+                height: MAP_SIZE+1,
+                name: "player",
+                opacity: 1,
+                type: "tilelayer",
+                visible: true,
+                width: MAP_SIZE+1,
                 x: 0,
                 y: 0
             }],
@@ -78,10 +90,23 @@ module.exports = {
                 spacing: 0,
                 tileheight: 32,
                 tilewidth: 64
+            }, {
+                firstgid: 6,
+                image: "player_base.png",
+                imageheight: 64,
+                imagewidth: 128,
+                margin: 0,
+                name: "player_base",
+                properties: {
+
+                },
+                spacing: 0,
+                tileheight: 32,
+                tilewidth: 64
             }],
             tilewidth: 64,
             version: 1,
-            width: 65
+            width: MAP_SIZE+1
         });
     }
 }
