@@ -5,7 +5,7 @@ table{border-collapse:separate;border-spacing:0;vertical-align:middle}
 caption,th,td{text-align:left;font-weight:normal;vertical-align:middle}
 a img{border:none}
 body{background-color:#334}
-#gameView{padding:0;margin:auto;position:absolute;top:0;left:0;right:0;bottom:0}
+#gameView{padding:0;margin:auto;position:absolute;top:0;left:0;right:0;bottom:0;z-index:0}
 #menu{padding:0;position:absolute;margin:auto;z-index:1;top:0;left:0;right:0;bottom:0;width:16em;height:20em;display:none;}
 #menu button{background-color:#333;color:#ccc;width:7em;height:3em;margin:auto;font-size:24pt;border-width:.5em;-webkit-border-radius:.5em;border-radius:.5em}
 #menu #new{background-color:#003;border-color:#00f}
@@ -17,3 +17,8 @@ body{background-color:#334}
 #debug{display:none;position:absolute;left:.5em;top:.5em;z-index:2;background-color:rgba(255,255,255,0.5);padding:5px;width:25vw;}
 #debug .label{float:left;clear:left}
 #debug .value{float:right;clear:right}
+#resources{width:100vw;height:10vh;font-size:16pt;text-align:center;display:none;}
+#resources div{width:30vw;margin:auto;padding:1em;float:left;clear:none;text-align:center;font-family:sans-serif}
+#resources #wood:before{content:'Wood: '}
+#resources #scrap_metal:before{content:'Scrap Metal: '}
+#resources #food:before{content:'Food: '}

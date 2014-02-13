@@ -3,80 +3,102 @@
 global-reset()
 
 body
-	background-color #334
+    background-color #334
 #gameView
-	padding 0
-	margin auto
-	position absolute
-	top 0
-	left 0
-	right 0
-	bottom 0
+    padding 0
+    margin auto
+    position absolute
+    top 0
+    left 0
+    right 0
+    bottom 0
+    z-index 0
 #menu
-	padding 0
-	position absolute
-	margin auto
-	z-index 1
-	top 0
-	left 0
-	right 0
-	bottom 0
-	width 16em
-	height 20em
-	display none
-	button
-		background-color #333
-		color #CCC
-		width 7em
-		height 3em
-		margin auto
-		font-size 24pt
-		border-width 0.5em
-		border-radius 0.5em
-	#new
-		background-color #003
-		border-color #00F
-	#load
-		background-color #030
-		border-color #0F0
+    padding 0
+    position absolute
+    margin auto
+    z-index 1
+    top 0
+    left 0
+    right 0
+    bottom 0
+    width 16em
+    height 20em
+    display none
+    button
+        background-color #333
+        color #CCC
+        width 7em
+        height 3em
+        margin auto
+        font-size 24pt
+        border-width 0.5em
+        border-radius 0.5em
+    #new
+        background-color #003
+        border-color #00F
+    #load
+        background-color #030
+        border-color #0F0
 #error
-	position absolute
-	margin auto
-	top 0
-	left 0
-	width 100vw
-	height 100vh
-	z-index 2
-	display none
-	background-color #300
-	span.error
-		position absolute
-		margin auto
-		top 0
-		left 0
-		right 0
-		bottom 0
-		width 25em
-		height 8em
-		h1
-			text-align center
-			font-size 24pt
+    position absolute
+    margin auto
+    top 0
+    left 0
+    width 100vw
+    height 100vh
+    z-index 2
+    display none
+    background-color #300
+    span.error
+        position absolute
+        margin auto
+        top 0
+        left 0
+        right 0
+        bottom 0
+        width 25em
+        height 8em
+        h1
+            text-align center
+            font-size 24pt
 
 #bugReportMessage
-	display none
+    display none
 
 #debug
-	display none
-	position absolute
-	left 0.5em
-	top 0.5em
-	z-index 2
-	background-color rgba(255,255,255,0.5)
-	padding 5px
-	width 25vw
-	.label
-		float left
-		clear left
-	.value
-		float right
-		clear right
+    display none
+    position absolute
+    left 0.5em
+    top 0.5em
+    z-index 2
+    background-color rgba(255,255,255,0.5)
+    padding 5px
+    width 25vw
+    .label
+        float left
+        clear left
+    .value
+        float right
+        clear right
+
+#resources
+    width 100vw
+    height 10vh
+    font-size 16pt
+    text-align center
+    display none
+    div
+        width 30vw
+        margin auto
+        padding 1em
+        float left
+        clear none
+        text-align center
+        font-family sans-serif
+    #wood:before
+        content:'Wood: '
+    #scrap_metal:before
+        content:'Scrap Metal: '
+    #food:before
+        content:'Food: '

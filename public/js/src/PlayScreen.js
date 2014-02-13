@@ -1,4 +1,4 @@
-define(["HUD","MaliceDebug"], function(HUD,MaliceDebug) {
+define(["MaliceDebug","Player"], function(MaliceDebug,Player) {
     function iso_to_screen(iso) {
         // TODO: implement this
         return {
@@ -9,8 +9,7 @@ define(["HUD","MaliceDebug"], function(HUD,MaliceDebug) {
     return me.ScreenObject.extend({
         init: function() {
             this.parent(true);
-            this.HUD = new HUD();
-            me.game.world.addChild(this.HUD);
+            this.player = new Player();
         },
 
         onResetEvent: function() {
@@ -52,6 +51,7 @@ define(["HUD","MaliceDebug"], function(HUD,MaliceDebug) {
             }
             me.game.update();
             me.game.draw();
+            this.player.update(); // among other things, draws the HUD
             malice.debug.framecount++;
             malice.debug.update();
         },
